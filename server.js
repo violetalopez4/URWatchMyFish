@@ -30,7 +30,7 @@ var db = new sqlite3.Database(file);
 
 db.serialize(function() {
   if(!exists){
-    db.run("CREATE TABLE users (name TEXT, password TEXT)");
+    db.run("CREATE TABLE users (name TEXT, password TEXT, fish TEXT)");
   }
 });
 
@@ -50,11 +50,42 @@ app.post('/users', function (req, res) {
     return; // return early!
   }
 //insert USER into database db
-  db.run("INSERT INTO users VALUES (?,?)", myName, myPass);
+  db.run("INSERT INTO users VALUES (?,?,?)", myName, myPass, "");
 
   res.send('OK');
 });
 
+app.post('/users/*', function (req, res) {
+  var postBody = req.body;
+  var nameToLookup = postBody.name; // this matches the '*' part of '/users/*' above
+  var givenPassword = postBody.password;
+  // try to look up in fakeDatabase
+    db.each("SELECT * FROM users WHERE name = \"" + nameToLookup + "\"", function(err, rows){
+      if(rows.name == null){
+        console.log("No response");
+        res.send('{}');
+        return;
+      }else if(rows.password == givenPassword){
+        console.log("Hello, " + rows.name);
+        res.send('/loggedIn.html');
+        return;
+      }
+      else{
+        console.log("Password incorrect");
+        res.send('{}');
+        return;
+      }
+    });
+  });
+
+app.put('/loggedIn', function (req, res){
+  var putBody = req.body;
+  var nameToEdit = putBody.name;
+  var fishInfo = putBody.info;
+  db.run("UPDATE users SET fish = \"" + fishInfo + "\" WHERE name = \"" + nameToEdit + "\"", function(err,rows){
+    console.log("wrote: " + fishInfo);
+  });
+});
 // start the server on http://localhost:1420/
 var server = app.listen(1420, function () {
   var port = server.address().port;

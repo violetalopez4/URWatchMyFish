@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $(document).ajaxError(function() {
+    alert("Sorry, there was a problem!");
+  });
+  $("#infoButton").click(function() {
+    $.ajax({
+      url: "/loggedIn"/*"users/" + $(nameBox).val()*/,
+      type: "PUT",
+      dataType : "text", 
+      data : { name: $("#nameBox").val(),
+               info: $("#info").val()
+             },
+      success: function( data ) {
+        console.log("You received some data!", data);
+        if (data == 'OK') {
+          $("#status").html("Successfully created a new user!");
+        } else {
+          $("#status").html("Error: could not create a new user!");
+        }
+      },
+    });
+  });
+});
+</script>
+<head>
+	<title>Logged In</title>
+</head>
+<body>
+	<p><strong>Welcome User!</strong></p>
+	<div>
+		<p>Your name:</p>
+		<p>
+			<input id="nameBox" type="text" size="20"/>
+		</p>
+		<p>Tell us about your fish: </p>
+		<p>
+		<textarea id="info" rows="12" cols="80"></textarea>
+		</p>
+		<p>
+		 <button id="infoButton">Submit</button>
+		 </p>
+	</div>
+
+</body>
