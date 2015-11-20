@@ -40,6 +40,7 @@ app.use(express.static('static_files'));
 
 // CREATE a new user
 app.post('/users', function (req, res) {
+  var postHead = req.head;
   var postBody = req.body;
   var myName = postBody.name;
   var myPass = postBody.password;
@@ -55,6 +56,7 @@ app.post('/users', function (req, res) {
   res.send('OK');
 });
 
+<<<<<<< Updated upstream
 app.post('/users/*', function (req, res) {
   var postBody = req.body;
   var nameToLookup = postBody.name; // this matches the '*' part of '/users/*' above
@@ -87,6 +89,9 @@ app.put('/loggedIn', function (req, res){
   });
 });
 // start the server on http://localhost:1420/
+=======
+// start the server on http://localhost:420/
+>>>>>>> Stashed changes
 var server = app.listen(1420, function () {
   var port = server.address().port;
   console.log('Server started at http://localhost:%s/', port);
