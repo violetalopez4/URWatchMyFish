@@ -63,7 +63,7 @@ app.post('/users/*', function (req, res) {
     db.each("SELECT * FROM users WHERE name = \"" + nameToLookup + "\"", function(err, rows){
       if(rows.name == null){
         console.log("No response");
-        res.send('{}');
+        res.send('error');
         return;
       }else if(rows.password == givenPassword){
         console.log("Hello, " + rows.name);
@@ -72,7 +72,7 @@ app.post('/users/*', function (req, res) {
       }
       else{
         console.log("Password incorrect");
-        res.send('{}');
+        res.send('error');
         return;
       }
     });

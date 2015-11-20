@@ -43,15 +43,11 @@ $(document).ready(function() {
              },
       success: function( data ) {
         console.log("You received some data!", data);
-          window.location = data;
-        if (data.name) {
-          console.log("Hello," + data.name, "!");
+        if (data == "error") {
+          console.log("Oops!");
         } else {
-          console.log("Error: could not find user!");
-          // clear the profile display
-          $("#nameDiv").html("");
-          $("#ageDiv").html("");
-          $("#profileImage").attr("src", "");
+          console.log("Nice!");
+          window.location = data;
         }
       },
     });
