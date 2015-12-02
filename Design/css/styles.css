@@ -347,5 +347,34 @@ hr {
 
 }
 
+.contractDetails{
+	text-align: center;
+	font-family: sans-serif;
+	color: #FFFFFF;
+}
 
+#denyButton{
+	display: inline-block;
+	width: 90px;
+	text-align: center;
+	font-size: 16px;
+	font-family: sans-serif;
+	color: #FFFFFF;
+    padding: 10px;
+    background-color:  #FF0000;
+    margin-left: 38%;
+    margin-top: 40px;
+}
 
+#confirmButton{
+	display: inline-block;
+	width: 90px;
+	text-align: center;
+	font-size: 16px;
+	font-family: sans-serif;
+	color: #FFFFFF;
+    padding: 10px;
+    background-color:  #00FF00;
+    margin-left: 80px;
+    margin-top: 40px;
+}
