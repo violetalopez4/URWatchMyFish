@@ -1,0 +1,52 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>URWATCHMYFISH</title>
+	<link rel="stylesheet" href="css/styles.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#fileupload").on("click",function(){
+       $("#my_file").click();
+    });    
+});
+	 </script>
+</head>
+<body>
+	
+
+	<p class="logout"> Log Out</p>
+	<p class="profile"> Hi, yourName! </p>
+	<center>
+	<h2 class= "sign"> Username's Profile </h2>
+	<form action="demo_form.asp" method="get">
+	
+	<!-- adapted from http://stackoverflow.com/questions/30753881/upload-and-save-image-onclick-of-image -->
+	<input type="file" id="my_file" style="display: none;" />
+    <img style="height: 150px; width:150px" id="fileupload" name="filetoupload" src="../Design/images/addProPic.png" alt="">
+
+
+<br><br>
+
+	First Name: <input id="firstBox" type="text" size="20"/><br><br>
+	<p>Description: <br>
+		<textarea id="descBox" rows="4" cols="50"></textarea><br><br>
+   	 Dorm: <input id="dormBox" type="text" size="20"/><br><br>
+	Availability:<br>
+	 <input type="checkbox" name="avail" value="Fall Break"> Fall Break<br>
+  <input type="checkbox" name="avail" value="Winter Break"> Winter Break<br>
+  <input type="checkbox" name="avail" value="MLK Weekend"> MLK Weekend<br>
+    <input type="checkbox" name="avail" value="Spring Break"> Spring Break<br>
+</p>
+	  <input type="submit" value="Submit">
+	
+</form>
+<center>
+
+</body>
+
+
+</html>
