@@ -17,7 +17,8 @@ $(document).ready(function() {
       type: "POST",
       dataType : "text", 
       data : { name: $("#nameBox").val(),
-               password: $("#passwordBox").val()
+               password: $("#passwordBox").val(),
+               type: $('input[name="accountType"]:checked').val()
              },
       success: function( data ) {
         console.log("You received some data!", data);
@@ -70,7 +71,10 @@ body{
     Name: <input id="nameBox" type="text" size="20"/>
     Password: <input id="passwordBox" type="text" size="20"/>
     </p>
-
+    <p>
+    <input id="ownerCheck" type="radio" name="accountType" value="1" checked/> Create account as fishowner
+    <input type="radio" name="accountType" value="0"/> Create account as caretaker
+    </p>
     <p>
     <button id="createButton">Create new user</button> 
     <button id="loginButton">Log in</button>

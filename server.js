@@ -30,7 +30,7 @@ var db = new sqlite3.Database(file);
 
 db.serialize(function() {
   if(!exists){
-    db.run("CREATE TABLE users (name TEXT, password TEXT, fish TEXT)");
+    db.run("CREATE TABLE users (name TEXT, password TEXT, fish TEXT, type TEXT)");
   }
 });
 
@@ -44,6 +44,7 @@ app.post('/users', function (req, res) {
   var postBody = req.body;
   var myName = postBody.name;
   var myPass = postBody.password;
+  var accountType = postBody.type;
 
   // must have a name and password!
   if (!myName||!myPass) {
@@ -51,12 +52,18 @@ app.post('/users', function (req, res) {
     return; // return early!
   }
 //insert USER into database db
-  db.run("INSERT INTO users VALUES (?,?,?)", myName, myPass, "");
+  if(accountType == 1){
+    db.run("INSERT INTO users VALUES (?,?,?,?)", myName, myPass, "", "owner");
+    console.log("created owner account");
+  }else{
+    db.run("INSERT INTO users VALUES (?,?,?,?)", myName, myPass, "", "caretaker");
+    console.log("created caretaker account");
+  }
 
   res.send('OK');
 });
 
-<<<<<<< Updated upstream
+//<<<<<<< Updated upstream
 app.post('/users/*', function (req, res) {
   var postBody = req.body;
   var nameToLookup = postBody.name; // this matches the '*' part of '/users/*' above
@@ -89,9 +96,9 @@ app.put('/loggedIn', function (req, res){
   });
 });
 // start the server on http://localhost:1420/
-=======
+//=======
 // start the server on http://localhost:420/
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
 var server = app.listen(1420, function () {
   var port = server.address().port;
   console.log('Server started at http://localhost:%s/', port);
