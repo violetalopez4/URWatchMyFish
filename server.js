@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(express.static('static_files'));
 
 var fs = require("fs");
-var file = "test.db";
+var file = "users.db";
 var exists = fs.existsSync(file);
 
 var sqlite3 = require("sqlite3").verbose();
