@@ -63,6 +63,26 @@ app.post('/users', function (req, res) {
   res.send('OK');
 });
 
+app.get('/search', function (req, res) {
+  var message = 'initialization';
+  var caretakerArray = [];
+  db.each("SELECT * FROM users WHERE type = \'caretaker\'", function(err, rows){
+    if(!rows){
+      console.log("null");
+      message = 'error';
+    }else{
+      console.log(rows.name);
+      caretakerArray.push({'name': rows.name});
+      message = 'maybe';
+    }
+  },
+  function(err, comp){
+    console.log(comp);
+  console.log('sending');
+  res.send({'names': caretakerArray});
+  });
+});
+
 //<<<<<<< Updated upstream
 app.post('/users/*', function (req, res) {
   var postBody = req.body;

@@ -1,5 +1,51 @@
 <!doctype html>
 <html lang="en">
+<script src="jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  $(document).ajaxError(function() {
+    alert("Sorry, there was a problem!");
+  });
+      $.ajax({
+      url: "search/",
+      type: "GET",
+      dataType : "json", 
+      data : { 
+             },
+      success: function( data ) {
+        console.log("You received some data!", data);
+        console.log(data.names[0].name);
+        $("#sname").html(data.names[0].name);
+        $("#sname2").html(data.names[1].name);
+        $("#sname3").html(data.names[2].name);
+      },
+    });
+});
+  //Code adapted from http://www.echoecho.com/jscookies02.htm
+ function deleteCookie (NameOfCookie) 
+ {
+ if (getCookie(NameOfCookie)) {
+ document.cookie = NameOfCookie + "=" + "; expires=Thu, 01-Jan-80 00:00:01 GMT";
+ }
+ }
+ 
+
+  //Code adapted from http://www.echoecho.com/jscookies02.htm
+ function getCookie(NameOfCookie)
+ {
+ begin = document.cookie.indexOf(NameOfCookie+"="); 
+ if (begin != -1)
+ { 
+ begin += NameOfCookie.length+1; 
+ end = document.cookie.indexOf(";", begin);
+ if (end == -1) end = document.cookie.length;
+ return document.cookie.substring(begin, end); } 
+ return null; 
+ }
+
+
+</script>
+
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +66,7 @@
 
 	<p class= "searches"> Searches</p>
 	<p class="scircle"></p>
-	<p class="sname"> Name: [insert] </p>
+	<p id="sname"> Name: [insert] </p>
 	<p class="slocation"> Location: [insert] </p>
 	<p class="savailable"> Available: [insert] </p>
 	<p class="star">  </p>
@@ -31,7 +77,7 @@
 	<hr>
 
 	<p class="scircle2"></p>
-	<p class="sname2"> Name: [insert] </p>
+	<p id="sname2" class="sname2"> Name: [insert] </p>
 	<p class="slocation2"> Location: [insert] </p>
 	<p class="savailable2"> Available: [insert] </p>
 	<p class="star2"> </p>
@@ -41,7 +87,7 @@
 	<p class="peoplerate2"> 10 </p>
 	<hr>
 	<p class="scircle3"></p>
-	<p class="sname3"> Name: [insert] </p>
+	<p id="sname3"> Name: [insert] </p>
 	<p class="slocation3"> Location: [insert] </p>
 	<p class="savailable3"> Available: [insert] </p>
 	<p class="star3"> </p>

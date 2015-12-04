@@ -172,7 +172,7 @@ width:100%;
     margin-left: 470px;
     margin-top: 195px;
 }
-.sname{
+#sname{
 	margin-left: 320px;
 	margin-top: -105px;
 	color: #FFFFFF;
@@ -271,7 +271,7 @@ hr {
 	-webkit-border-radius: 50px;
 	border-radius: 50px;
 }
-.sname3{
+#sname3{
 	margin-left: 320px;
 	margin-top: -100px;
 	color: #FFFFFF;
