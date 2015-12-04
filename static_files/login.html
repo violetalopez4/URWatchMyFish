@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>URWATCHMYFISH</title>
+	<link rel="stylesheet" href="./Design/css/styles.css">
+<script src="jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $(document).ajaxError(function() {
+    alert("Sorry, there was a problem!");
+  });
+    $("#loginButton").click(function() {
+    // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
+    // Using the core $.ajax() method
+    $.ajax({
+      // The URL for the request -- note the simple REST API!
+      // all URLs are relative to http://localhost:3000/
+      url: "users/" + $("#nameBox").val(),
+      type: "POST",
+      dataType : "text", // this URL returns data in JSON format
+      data : { name: $("#nameBox").val(),
+               password: $("#passwordBox").val()
+             },
+      success: function( data ) {
+        console.log("You received some data!", data);
+        if (data == "error") {
+          console.log("Oops!");
+        } else {
+          console.log("Nice!");
+          document.cookie="username="+$("#nameBox").val();
+          document.cookie="password="+$("#passwordBox").val();
+          window.location = data;
+        }
+      },
+    });
+  });
+});
+</script>
+</head>
+<body>
+	
+	<p class="question2"> Not a member? <p>
+	<a href="./main.html"><div class="box"> Sign Up</div></a>
+
+	<div class="fish">
+	<img src="./Design/images/fishy.gif">
+	</div>
+	<p class= "sign"> SIGN IN TO <p>
+	<h1 class= "title2" >URWATCHMYFISH </h1>
+	    <input class="name"id="nameBox" type="text" size="20" placeholder="Name"/><br><br>
+    <input class="password" id="passwordBox" type="text" size="20" placeholder="Password"/>
+	 <button class="signup" id="loginButton">Log in</button> 
+</body>
+</html>

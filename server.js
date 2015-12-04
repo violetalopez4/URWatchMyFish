@@ -63,7 +63,7 @@ app.post('/users', function (req, res) {
   res.send('OK');
 });
 
-//<<<<<<< Updated upstream
+//login
 app.post('/users/*', function (req, res) {
   var postBody = req.body;
   var nameToLookup = postBody.name; // this matches the '*' part of '/users/*' above

@@ -3,6 +3,11 @@ This is adapted code from Philip Guo's lectures 11 and 12
 This is the frontend for URWatchMyFish
 It demenstrates the C in CRUD with ajax
 server.js is the backend-->
+<head>
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URWATCHMYFISH</title>
+  <link rel="stylesheet" href="./Design/css/styles.css">
 
 <script src="jquery-1.11.3.min.js"></script>
 
@@ -24,61 +29,51 @@ $(document).ready(function() {
         console.log("You received some data!", data);
         if (data == 'OK') {
           $("#status").html("Successfully created a new user!");
+          document.cookie="username="+$("#nameBox").val();
+          document.cookie="password="+$("#passwordBox").val();
         } else {
           $("#status").html("Error: could not create a new user!");
         }
       },
     });
   });
-    $("#loginButton").click(function() {
-    // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
-    // Using the core $.ajax() method
-    $.ajax({
-      // The URL for the request -- note the simple REST API!
-      // all URLs are relative to http://localhost:3000/
-      url: "users/" + $("#nameBox").val(),
-      type: "POST",
-      dataType : "text", // this URL returns data in JSON format
-      data : { name: $("#nameBox").val(),
-               password: $("#passwordBox").val()
-             },
-      success: function( data ) {
-        console.log("You received some data!", data);
-        if (data == "error") {
-          console.log("Oops!");
-        } else {
-          console.log("Nice!");
-          window.location = data;
-        }
-      },
-    });
-  });
+    
 });
 </script>
-<style>
-body{
-    background-color: #1095b2;
-}
 
-</style>
 
 </head>
   <body>
     <center>
-  <h1>Welcome to URWATCHMYFISH!</h1>
 
-    <p>
-    Name: <input id="nameBox" type="text" size="20"/>
-    Password: <input id="passwordBox" type="text" size="20"/>
+
+    <div style="padding-right:170px">
+  <p class="question"> Already a member? </p>
+  </div>
+  <a href="./login.html"><p class="box"> Log In</p></a>
+
+<div style="padding-right:1150px">
+  <div class="fish">
+  <img src="../Design/images/fishy.gif">
+  </div>
+</div>
+
+  <h1 class= "title" >URWATCHMYFISH </h1>
+  <strong><p class="description"> Find a babysitter for your fishy friend. </p></strong>
+  <div style="padding-right:300px">
+    <input class="name"id="nameBox" type="text" size="20" placeholder="Name"/><br><br>
+    <input class="password" id="passwordBox" type="text" size="20" placeholder="Password"/>
+  </div>
     </p>
     <p>
     <input id="ownerCheck" type="radio" name="accountType" value="1" checked/> Create account as fishowner
     <input type="radio" name="accountType" value="0"/> Create account as caretaker
     </p>
+    <div style="padding-right:450px">
     <p>
-    <button id="createButton">Create new user</button> 
-    <button id="loginButton">Log in</button>
+    <button class="signup" id="createButton">Create new user</button> 
     </p>
+  </div>
     <hr/>
 
     <div id="status"></div>

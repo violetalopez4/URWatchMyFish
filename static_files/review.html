@@ -1,0 +1,96 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>URWATCHMYFISH</title>
+	<link rel="stylesheet" href="./Design/css/styles.css">
+	<style>
+
+
+.box1{
+	margin-left: 400px;
+	background-color: white;
+	border: 1px solid black;
+	float:left;
+}
+
+/*adapted from https://css-tricks.com/star-ratings/*/
+.rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+}
+.rating > span {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+}
+.rating > span:hover:before,
+.rating > span:hover ~ span:before {
+   content: "\2605";
+   position: absolute;
+}
+
+
+
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	getYourName();
+    $("#fileupload").on("click",function(){
+       $("#my_file").click();
+    }); 
+});
+
+  //Code adapted from http://www.echoecho.com/jscookies02.htm
+ function getCookie(NameOfCookie)
+ {
+ begin = document.cookie.indexOf(NameOfCookie+"="); 
+ if (begin != -1)
+ { 
+ begin += NameOfCookie.length+1; 
+ end = document.cookie.indexOf(";", begin);
+ if (end == -1) end = document.cookie.length;
+ return document.cookie.substring(begin, end); } 
+ return null; 
+ }
+
+ function getYourName()
+ {
+ 	var name = getCookie("username");
+ 	document.getElementById('yourname').innerHTML = name;
+ }
+
+	 </script>
+</head>
+<body>
+	
+
+	<p class="logout"> Log Out</p>
+	<p class="profile"> Hi, <span id = "yourname">yourName!</span></p>
+	<div class="fish">
+	<img src="./Design/images/fishy.gif">
+	</div>
+
+	<center>
+	<h2 class= "sign"> Leave a Review </h2>
+	<h3>How well did CARETAKER take care of your fish!</h3>
+		
+	<textarea id="review" class="box1" rows="15" cols="62"></textarea>
+<div class="rating"style="margin-top:270px;">
+	<span>&#9734</span>
+	<span>&#9734</span>
+<span>&#9734</span>
+<span>&#9734</span>
+<span>&#9734</span></div><br>
+		
+<input type="submit" value="Finish">
+
+
+</body>
+
+
+</html>
