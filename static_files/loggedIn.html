@@ -25,25 +25,60 @@ $(document).ready(function() {
       },
     });
   });
+  $("#logoutButton").click(function() {
+deleteCookie('name');
+deleteCookie('password');
+window.location = '/main.html';
 });
+ var nameString = getCookie('name');
+ console.log(nameString);
+ if(nameString!=null)
+ {
+ $('.nameLocation').html(nameString);
+ }
+  });
+
+  //Code adapted from http://www.echoecho.com/jscookies02.htm
+ function deleteCookie (NameOfCookie) 
+ {
+ if (getCookie(NameOfCookie)) {
+ document.cookie = NameOfCookie + "=" + "; expires=Thu, 01-Jan-80 00:00:01 GMT";
+ }
+ }
+ 
+
+  //Code adapted from http://www.echoecho.com/jscookies02.htm
+ function getCookie(NameOfCookie)
+ {
+ begin = document.cookie.indexOf(NameOfCookie+"="); 
+ if (begin != -1)
+ { 
+ begin += NameOfCookie.length+1; 
+ end = document.cookie.indexOf(";", begin);
+ if (end == -1) end = document.cookie.length;
+ return document.cookie.substring(begin, end); } 
+ return null; 
+ }
+
 </script>
 <head>
-	<title>Logged In</title>
+  <title>Logged In</title>
 </head>
 <body>
-	<p><strong>Welcome User!</strong></p>
-	<div>
-		<p>Your name:</p>
-		<p>
-			<input id="nameBox" type="text" size="20"/>
-		</p>
-		<p>Tell us about your fish: </p>
-		<p>
-		<textarea id="info" rows="12" cols="80"></textarea>
-		</p>
-		<p>
-		 <button id="infoButton">Submit</button>
-		 </p>
-	</div>
+  <p><strong>Welcome <span class="nameLocation">User</span>!</strong></p>
+  <div>
+    <p>Your name:</p>
+    <p>
+      <input id="nameBox" type="text" size="20"/>
+    </p>
+    <p>Tell us about your fish: </p>
+    <p>
+    <textarea id="info" rows="12" cols="80"></textarea>
+    </p>
+    <p>
+     <button id="infoButton">Submit</button>
+     <button id="logoutButton">Log Out</button>
+     </p>
+  </div>
 
 </body>
