@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<script src="jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	getYourName();
+	 refresh();
+  setInterval(refresh, 5000);
+  $(document).ajaxError(function() {
+    alert("Sorry, there was a problem!");
+  });
+
+});
+
+ function refresh(){
+ 	$.ajax({
+      url: "/marketplace/",
+      type: "GET",
+      dataType : "json", 
+      data : { 
+             },
+      success: function( data ) {
+        console.log("You received some data!", data);
+        console.log(data.names[0].name);
+        var i;
+        var arrowImg = document.createElement('img');
+        //arrowImg.src = 'images/arrow.png';
+        var list = document.getElementById('marketList');
+        list.innerHTML ="";
+        for(i = 0; i < data.names.length; i++){
+        	var newCaretaker = document.createElement('li');
+            var newCircle = document.createElement('p');
+            newCircle.className = 'scircle';
+            newCaretaker.appendChild(newCircle);
+        	var newSname = document.createElement('p');
+        	newSname.className = 'sname';
+        	newSname.innerHTML = data.names[i].name;
+        	newCaretaker.appendChild(newSname);
+        	var newLocation = document.createElement('p');
+        	newLocation.className =  'slocation';
+        	newLocation.innerHTML = 'Location: [insert]';
+        	newCaretaker.appendChild(newLocation);
+        	var newAvailable = document.createElement('p');
+        	newAvailable.className = 'savailable';
+        	newAvailable.innerHTML = 'Available: [insert]';
+        	newCaretaker.appendChild(newAvailable);
+        	//var newArrow = document.createElement('div');
+        	//newArrow.className = 'arrow';
+        	//newArrow.appendChild(arrowImg);
+        	//newCaretaker.appendChild(newArrow);
+        	var newPeopleRate = document.createElement('p');
+        	newPeopleRate.className = 'peoplerate';
+        	newPeopleRate.innerHTML = '10';
+        	newCaretaker.appendChild(newPeopleRate);
+        	list.appendChild(newCaretaker);
+        }
+      },
+    });
+ }
+  //Code adapted from http://www.echoecho.com/jscookies02.htm
+ function deleteCookie (NameOfCookie) 
+ {
+ if (getCookie(NameOfCookie)) {
+ document.cookie = NameOfCookie + "=" + "; expires=Thu, 01-Jan-80 00:00:01 GMT";
+ }
+ }
+ 
+  //Code adapted from http://www.echoecho.com/jscookies02.htm
+ function getCookie(NameOfCookie)
+ {
+ begin = document.cookie.indexOf(NameOfCookie+"="); 
+ if (begin != -1)
+ { 
+ begin += NameOfCookie.length+1; 
+ end = document.cookie.indexOf(";", begin);
+ if (end == -1) end = document.cookie.length;
+ return document.cookie.substring(begin, end); } 
+ return null; 
+ }
+
+  function getYourName()
+ {
+ 	var name = getCookie("username");
+ 	document.getElementById('yourname').innerHTML = name;
+ }
+
+</script>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>URWATCHMYFISH</title>
+	<link rel="stylesheet" href="css/styles.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+
+</head>
+<body>
+	
+
+	<p class="logout"> Log Out</p>
+	<p class="profile"> Hi, <span id = "yourname">yourName!</span></p>
+
+	<div class="fish">
+	<img src="images/fishy.gif">
+	</div>
+
+	<p class= "searches">Marketplace for Fish Owners</p>
+	<ul id='marketList'>
+
+		<div class="stars"> <!-- second row of stars -->
+
+	<span>&#9734</span>
+	<span>&#9734</span>
+<span>&#9734</span>
+<span>&#9734</span>
+<span>&#9734</span>
+</div>
+</td>
+<tr>
+</table>
+
+	<div class="stars"> <!-- second row of stars -->
+
+	<span>&#9734</span>
+	<span>&#9734</span>
+<span>&#9734</span>
+<span>&#9734</span>
+<span>&#9734</span>
+</div>
+
+<div class="stars2"> <!-- third row of stars -->
+<div class="rating">
+	<span>&#9734</span>
+	<span>&#9734</span>
+<span>&#9734</span>
+<span>&#9734</span>
+<span>&#9734</span></div>
+</div>
+<div class="stars3"> <!-- first row of stars -->
+<div class="rating">
+	<span>&#9734</span>
+	<span>&#9734</span>
+<span>&#9734</span>
+<span>&#9734</span>
+<span>&#9734</span></div>
+</div>
+
+	
+</body>
+
+
+</html>

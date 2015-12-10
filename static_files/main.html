@@ -31,14 +31,19 @@ $(document).ready(function() {
           $("#status").html("Successfully created a new user!");
           document.cookie="username="+$("#nameBox").val();
           document.cookie="password="+$("#passwordBox").val();
+          document.cookie="accounttype="+$('input[name="accountType"]:checked').val();
+            if($('input[name="accountType"]:checked').val()=="1")
+              window.location="./FOprofile.html"
+            if ($('input[name="accountType"]:checked').val()=="0")
+              window.location="./CTprofile.html";
         } else {
           $("#status").html("Error: could not create a new user!");
         }
       },
     });
   });
-    
 });
+
 </script>
 
 

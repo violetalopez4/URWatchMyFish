@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<script src="jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  $(document).ajaxError(function() {
+    alert("Sorry, there was a problem!");
+  });
+  refresh();
+  setInterval(refresh, 5000);
+});
+  //Code adapted from http://www.echoecho.com/jscookies02.htm
+ function deleteCookie (NameOfCookie) 
+ {
+ if (getCookie(NameOfCookie)) {
+ document.cookie = NameOfCookie + "=" + "; expires=Thu, 01-Jan-80 00:00:01 GMT";
+ }
+ }
+ 
+ function refresh(){
+ 	$.ajax({
+      url: "search/",
+      type: "GET",
+      dataType : "json", 
+      data : { 
+             },
+      success: function( data ) {
+        console.log("You received some data!", data);
+        console.log(data.names[0].name);
+        var i;
+        var arrowImg = document.createElement('img');
+        //arrowImg.src = 'images/arrow.png';
+        var list = document.getElementById('marketList');
+        list.innerHTML ="";
+        for(i = 0; i < data.names.length; i++){
+        	var newCaretaker = document.createElement('li');
+            var newCircle = document.createElement('p');
+            newCircle.className = 'scircle';
+            newCaretaker.appendChild(newCircle);
+        	var newSname = document.createElement('p');
+        	newSname.className = 'sname';
+        	newSname.innerHTML = data.names[i].name;
+        	newCaretaker.appendChild(newSname);
+        	var newLocation = document.createElement('p');
+        	newLocation.className =  'slocation';
+        	newLocation.innerHTML = 'Location: [insert]';
+        	newCaretaker.appendChild(newLocation);
+        	var newAvailable = document.createElement('p');
+        	newAvailable.className = 'savailable';
+        	newAvailable.innerHTML = 'Available: [insert]';
+        	newCaretaker.appendChild(newAvailable);
+        	//var newArrow = document.createElement('div');
+        	//newArrow.className = 'arrow';
+        	//newArrow.appendChild(arrowImg);
+        	//newCaretaker.appendChild(newArrow);
+        	var newPeopleRate = document.createElement('p');
+        	newPeopleRate.className = 'peoplerate';
+        	newPeopleRate.innerHTML = '10';
+        	newCaretaker.appendChild(newPeopleRate);
+        	list.appendChild(newCaretaker);
+        }
+      },
+    });
+ }
+
+  //Code adapted from http://www.echoecho.com/jscookies02.htm
+ function getCookie(NameOfCookie)
+ {
+ begin = document.cookie.indexOf(NameOfCookie+"="); 
+ if (begin != -1)
+ { 
+ begin += NameOfCookie.length+1; 
+ end = document.cookie.indexOf(";", begin);
+ if (end == -1) end = document.cookie.length;
+ return document.cookie.substring(begin, end); } 
+ return null; 
+ }
+
+
+</script>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>URWATCHMYFISH</title>
+	<link rel="stylesheet" href="css/styles.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+
+</head>
+<body>
+	
+
+	<p class="logout"> Log Out</p>
+	<p class="profile"> Hi, yourName! </p>
+
+	<div class="fish">
+	<img src="images/fishy.gif">
+	</div>
+
+	<p class= "searches"> Searches</p>
+	<ul id='marketList'>
+	<!--
+	<li>
+	<p class="scircle"></p>
+	<p id="sname1" class="sname"> Name: [insert] </p>
+	<p class="slocation"> Location: [insert] </p>
+	<p class="savailable"> Available: [insert] </p>
+	<p class="star">  </p>
+	<div class="arrow">
+	<img src="images/arrow.png">
+	</div>
+	<p class="peoplerate"> 10 </p>
+	</li>
+
+	<li>
+	<p class="scircle"></p>
+	<p id="sname2" class="sname"> Name: [insert] </p>
+	<p class="slocation"> Location: [insert] </p>
+	<p class="savailable"> Available: [insert] </p>
+	<p class="star"> </p>
+	<div class="arrow">
+	<img src="images/arrow.png">
+	</div>
+	<p class="peoplerate"> 10 </p>
+	</li>
+
+	<li>
+	<p class="scircle"></p>
+	<p id="sname3" class="sname"> Name: [insert] </p>
+	<p class="slocation"> Location: [insert] </p>
+	<p class="savailable"> Available: [insert] </p>
+	<p class="star"> </p>
+	<div class="arrow">
+	<img src="images/arrow.png">
+	</div>
+	<p class="peoplerate"> 10 </p>
+	</li>
+	-->
+	</ul>
+
+	<div class="stars">
+<span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+</div>
+
+<div class="stars2">
+<span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+</div>
+<div class="stars3">
+<span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+</div>
+
+	
+</body>
+
+
+</html>

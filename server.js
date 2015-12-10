@@ -35,7 +35,6 @@ db.serialize(function() {
 });
 
 
-app.use(express.static('static_files'));
 
 
 // CREATE a new user
@@ -63,6 +62,28 @@ app.post('/users', function (req, res) {
   res.send('OK');
 });
 
+
+
+// app.get('/search', function (req, res) {
+//   var message = 'initialization';
+//   var caretakerArray = [];
+//   db.each("SELECT * FROM users WHERE type = \'caretaker\'", function(err, rows){
+//     if(!rows){
+//       console.log("null");
+//       message = 'error';
+//     }else{
+//       console.log(rows.name);
+//       caretakerArray.push({'name': rows.name});
+//       message = 'maybe';
+//     }
+//   },
+//   function(err, comp){
+//     console.log(comp);
+//   console.log('sending');
+//   res.send({'names': caretakerArray});
+//   });
+// });
+
 //login
 app.post('/users/*', function (req, res) {
   var postBody = req.body;
@@ -76,7 +97,12 @@ app.post('/users/*', function (req, res) {
         return;
       }else if(rows.password == givenPassword){
         console.log("Hello, " + rows.name);
-        res.send('/loggedIn.html');
+        if(rows.type == "caretaker")
+        res.send('./CTprofile.html');
+       else if(rows.type == "owner")
+         res.send('./FOprofile.html');
+       else
+        res.send('type error');
         return;
       }
       else{
@@ -87,18 +113,155 @@ app.post('/users/*', function (req, res) {
     });
   });
 
-app.put('/loggedIn', function (req, res){
-  var putBody = req.body;
-  var nameToEdit = putBody.name;
-  var fishInfo = putBody.info;
-  db.run("UPDATE users SET fish = \"" + fishInfo + "\" WHERE name = \"" + nameToEdit + "\"", function(err,rows){
-    console.log("wrote: " + fishInfo);
+// app.put('/loggedIn', function (req, res){
+//   var putBody = req.body;
+//   var nameToEdit = putBody.name;
+//   var fishInfo = putBody.info;
+//   db.run("UPDATE users SET fish = \"" + fishInfo + "\" WHERE name = \"" + nameToEdit + "\"", function(err,rows){
+//     console.log("wrote: " + fishInfo);
+//   });
+// });
+
+function getAvgRating(username)
+{
+  var sum = 0;
+  db.each("SELECT rating FROM "+username, function(err,rows)
+  {
+    if(err)
+    {
+      return 0;
+    }
+   else{
+    console.log("Rating is: "+rows[0].rating);
+    for(var i = 0; i<rows.length; i++)
+      sum=sum+rows[i].rating;
+    var avg = sum/rows.length;
+  return avg;
+}
+  });
+  
+}
+
+app.get('/marketplace/', function (req, res) {
+ 
+
+  var message = 'initialization';
+  var caretakerArray = [];
+  var ratingArray = [];
+  db.each("SELECT * FROM users WHERE type = \'caretaker\'", function(err, rows){
+    if(!rows){
+      console.log("null");
+      message = 'error';
+    }else{
+      console.log(rows.name);
+      caretakerArray.push({'name': rows.name});
+      ratingArray.push({'rating': getAvgRating(rows.name)})
+      //console.log(getAvgRating(rows.name));
+      message = 'maybe';
+    }
+  },
+  function(err, comp){
+    console.log(comp);
+  console.log('sending');
+  res.send({'names': caretakerArray});
   });
 });
-// start the server on http://localhost:1420/
-//=======
-// start the server on http://localhost:420/
-//>>>>>>> Stashed changes
+
+
+app.put('/CTprofile/', function(req, res)
+{
+ var postBody = req.body;
+ var username = postBody.username;
+ var first = postBody.first;
+ var descr = postBody.descr;
+ var dorm= postBody.dorm;
+ var fall= postBody.fall;
+ var thanks= postBody.thanks;
+ var winter= postBody.winter;
+ var mlk= postBody.mlk;
+ var spring= postBody.spring;
+
+
+
+db.serialize(function() {
+  //creates a bunch of the same entries, but there's nothing I can do about it
+   db.run("CREATE TABLE IF NOT EXISTS CTprofiles (username TEXT, firstname TEXT, description TEXT, dorm TEXT, fall TEXT, thanksgiving TEXT, winter TEXT, mlk TEXT, spring TEXT)"); 
+      
+    db.run("INSERT INTO CTprofiles VALUES (?,?,?,?,?,?,?,?,?)", username, first, descr, dorm, fall, thanks, winter, mlk, spring);
+
+       db.run("UPDATE CTprofiles SET firstname = \"" + first + "\", description = \"" + descr + "\", dorm = \"" + dorm + "\", fall = \"" + fall + "\", thanksgiving = \"" + thanks + "\", winter= \"" + winter + "\", mlk = \"" + mlk + "\", spring = \"" + spring + "\" WHERE username = \"" + username + "\"", function(err,result)
+    {
+    console.log("Updated CareTaker profile for " +username);
+   });//close update  
+  
+
+  
+    
+    
+    
+   
+    res.send('OK');
+});
+
+});
+
+
+app.put("/FOprofile/", function(req, res)
+{
+ var postBody = req.body;
+ var username = postBody.username;
+ var first = postBody.first;
+ var fish = postBody.fishnum;
+ var fall= postBody.fall;
+ var thanks= postBody.thanks;
+ var winter= postBody.winter;
+ var mlk= postBody.mlk;
+ var spring= postBody.spring;
+
+
+db.serialize(function() {
+  //creates a bunch of the same entries, but there's nothing I can do about it
+   db.run("CREATE TABLE IF NOT EXISTS FOprofiles (username TEXT, firstname TEXT, fishnum TEXT, fall TEXT, thanksgiving TEXT, winter TEXT, mlk TEXT, spring TEXT)"); 
+      
+    db.run("INSERT INTO FOprofiles VALUES (?,?,?,?,?,?,?,?)", username, first, fish, fall, thanks, winter, mlk, spring);
+
+       db.run("UPDATE FOprofiles SET firstname = \"" + first + "\", fishnum= \"" + fish + "\", fall = \"" + fall + "\", thanksgiving = \"" + thanks + "\", winter= \"" + winter + "\", mlk = \"" + mlk + "\", spring = \"" + spring + "\" WHERE username = \"" + username + "\"", function(err,result)
+    {
+    console.log("Updated Fishowner profile for " +username);
+   });//close update  
+  
+
+  
+    
+    
+    
+   
+    res.send('OK');
+});
+
+});
+
+
+
+
+app.put('/review/', function(req, res)
+{
+ var postBody = req.body;
+ var username = postBody.username;
+ var review = postBody.review;
+ var rating = postBody.rating;
+ var caretaker= postBody.caretaker;
+
+db.serialize(function() {
+    db.run("CREATE TABLE IF NOT EXISTS "+caretaker+" (user TEXT, review TEXT, rating INT)");
+    db.run("INSERT INTO "+caretaker+" VALUES (?,?,?)", username, review, rating);
+    console.log("Added review for " +caretaker+" from "+username);
+    res.send('OK');
+});
+
+});
+
+
 var server = app.listen(1420, function () {
   var port = server.address().port;
   console.log('Server started at http://localhost:%s/', port);
