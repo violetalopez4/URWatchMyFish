@@ -41,6 +41,7 @@ $(document).ready(function(){
         	spring=$('input[name="spring"]:checked').val();
         else
         	spring="no";
+        var	finfoe = document.getElementById('fishinfo').value;
 
     $.ajax({
       // The URL for the request -- note the simple REST API!
@@ -52,6 +53,7 @@ $(document).ready(function(){
           username: getCookie("username"),
           first: first,
       		fishnum: fish,
+      		fishinfo: finfoe,
          	fall: fall,
           thanks: thanksgiving,
            winter: winter,
@@ -119,7 +121,7 @@ $(document).ready(function(){
     <input type="checkbox" name="spring" value="Spring Break"> Spring Break<br>
 	</div>
 
-	<p class="newfish"> </p>
+	<p class="newfish"><textarea id="fishinfo" rows="7" cols="48" required></textarea></p>
 	<p class="newfishtitle"> Tell us about your fish! </p>
 	<input class="submit" type="submit" id = "submit" value="Submit"> 
 </body>

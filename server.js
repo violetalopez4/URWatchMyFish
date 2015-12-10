@@ -212,6 +212,7 @@ app.put("/FOprofile/", function(req, res)
  var username = postBody.username;
  var first = postBody.first;
  var fish = postBody.fishnum;
+ var finfoe = postBody.fishinfo;
  var fall= postBody.fall;
  var thanks= postBody.thanks;
  var winter= postBody.winter;
@@ -221,11 +222,11 @@ app.put("/FOprofile/", function(req, res)
 
 db.serialize(function() {
   //creates a bunch of the same entries, but there's nothing I can do about it
-   db.run("CREATE TABLE IF NOT EXISTS FOprofiles (username TEXT, firstname TEXT, fishnum TEXT, fall TEXT, thanksgiving TEXT, winter TEXT, mlk TEXT, spring TEXT)"); 
+   db.run("CREATE TABLE IF NOT EXISTS FOprofiles (username TEXT, firstname TEXT, fishnum TEXT, fishinfo TEXT, fall TEXT, thanksgiving TEXT, winter TEXT, mlk TEXT, spring TEXT)"); 
       
-    db.run("INSERT INTO FOprofiles VALUES (?,?,?,?,?,?,?,?)", username, first, fish, fall, thanks, winter, mlk, spring);
+    db.run("INSERT INTO FOprofiles VALUES (?,?,?,?,?,?,?,?,?)", username, first, fish, finfoe, fall, thanks, winter, mlk, spring);
 
-       db.run("UPDATE FOprofiles SET firstname = \"" + first + "\", fishnum= \"" + fish + "\", fall = \"" + fall + "\", thanksgiving = \"" + thanks + "\", winter= \"" + winter + "\", mlk = \"" + mlk + "\", spring = \"" + spring + "\" WHERE username = \"" + username + "\"", function(err,result)
+       db.run("UPDATE FOprofiles SET firstname = \"" + first + "\", fishnum= \"" + fish + "\", fishinfo= \"" + finfoe + "\", fall = \"" + fall + "\", thanksgiving = \"" + thanks + "\", winter= \"" + winter + "\", mlk = \"" + mlk + "\", spring = \"" + spring + "\" WHERE username = \"" + username + "\"", function(err,result)
     {
     console.log("Updated Fishowner profile for " +username);
    });//close update  
