@@ -37,6 +37,7 @@ db.serialize(function() {
 
 
 
+
 // CREATE a new user
 app.post('/users', function (req, res) {
   var postHead = req.head;
@@ -186,25 +187,28 @@ app.put('/CTprofile/', function(req, res)
 db.serialize(function() {
   //creates a bunch of the same entries, but there's nothing I can do about it
    db.run("CREATE TABLE IF NOT EXISTS CTprofiles (username TEXT, firstname TEXT, description TEXT, dorm TEXT, fall TEXT, thanksgiving TEXT, winter TEXT, mlk TEXT, spring TEXT)"); 
-      
-    db.run("INSERT INTO CTprofiles VALUES (?,?,?,?,?,?,?,?,?)", username, first, descr, dorm, fall, thanks, winter, mlk, spring);
+  
+  db.get("SELECT * FROM CTprofiles WHERE username = \"" + username+ "\"", function(err, rows){
+    console.log(rows);
+    if(!rows){
+      db.run("INSERT INTO CTprofiles VALUES (?,?,?,?,?,?,?,?,?)", username, first, descr, dorm, fall, thanks, winter, mlk, spring);
+      console.log("Created CareTaker profile for " +username);
+    }else{
+      db.run("UPDATE CTprofiles SET firstname = \"" + first + "\", description = \"" + descr + "\", dorm = \"" + dorm + "\", fall = \"" + fall + "\", thanksgiving = \"" + thanks + "\", winter= \"" + winter + "\", mlk = \"" + mlk + "\", spring = \"" + spring + "\" WHERE username = \"" + username + "\"", function(err,result){
+    console.log("Updated CareTaker profile for " +username);
+        });//close update  
+    }
+  }); 
+    /*db.run("INSERT INTO CTprofiles VALUES (?,?,?,?,?,?,?,?,?)", username, first, descr, dorm, fall, thanks, winter, mlk, spring);
 
        db.run("UPDATE CTprofiles SET firstname = \"" + first + "\", description = \"" + descr + "\", dorm = \"" + dorm + "\", fall = \"" + fall + "\", thanksgiving = \"" + thanks + "\", winter= \"" + winter + "\", mlk = \"" + mlk + "\", spring = \"" + spring + "\" WHERE username = \"" + username + "\"", function(err,result)
     {
     console.log("Updated CareTaker profile for " +username);
-   });//close update  
-  
-
-  
-    
-    
-    
+   });//close update  */  
    
     res.send('OK');
 });
-
 });
-
 
 app.put("/FOprofile/", function(req, res)
 {
